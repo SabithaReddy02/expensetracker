@@ -5,7 +5,8 @@ const Expense=require('../models/Expense')
 exports.getAllExpenses=async(req,res)=>{
     try{
         const expense=await Expense.find();//get all expense
-        res.json(expenses)
+        console.log(expense)
+       return res.json(expense)
     }catch(err){
         console.log("Error in fetching the expenses",err)
         res.status(500).json({message:'Internal server error'})

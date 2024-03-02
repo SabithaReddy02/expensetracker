@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from "axios"
 
 const ExpenseTracker = () => {
@@ -19,13 +19,21 @@ const ExpenseTracker = () => {
     
         //add transaction to list
         setTransaction((preTrans)=>[...preTrans,{description,amount:parsedAmount},])
-        let Res = await axios.post("http://localhost:8080/expenses",{ description:description,
-        amount:parsedAmount})
+        let Res = await axios.post("https://expensetracker-2i7k.onrender.com/expenses",{ description:description,amount:amount})
         console.log(Res,"postmethod")
         //clear form
-        setDescription()
-        setAmount()
+        setDescription('')
+        setAmount('')
+
     }
+    const getAllExpenses =async()=>{
+        let Res = await axios.get("https://expensetracker-2i7k.onrender.com/expenses")
+        console.log(Res,"get request")
+    }
+
+    useEffect(()=>{
+        getAllExpenses()
+    },[])
   return (
     <div> 
         <div className='container'>
